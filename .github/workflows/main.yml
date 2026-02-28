@@ -62,7 +62,7 @@ jobs:
           zip -r kernel-build-full.zip output/
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: kernel-full-build
           path: linux-src/kernel-build-full.zip
