@@ -28,33 +28,20 @@ jobs:
             make \
             zip
 
-      - name: Clone kernel source
-        run: |
-          git clone --depth=1 https://github.com/torvalds/linux.git linux-src
-
-      - name: Copy config
-        run: |
-          cp config linux-src/.config
-
-      - name: Prepare config
-        run: |
-          cd linux-src
-          make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
-
       - name: Compile kernel + modules + dtbs
         run: |
-          cd linux-src
+          cd ~/b860h-kernel
           make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc) Image modules dtbs
 
       - name: Install modules
         run: |
-          cd linux-src
+          cd ~/b860h-kernel
           mkdir -p out_mod
           make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=out_mod modules_install
 
       - name: Package output
         run: |
-          cd linux-src
+          cd ~/b860h-kernel
           mkdir output
           cp arch/arm64/boot/Image output/
           cp arch/arm64/boot/dts/amlogic/*.dtb output/
@@ -65,4 +52,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: kernel-full-build
-          path: linux-src/kernel-build-full.zip
+          path: ~/b860h-kernel/kernel-build-full.zip
