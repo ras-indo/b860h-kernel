@@ -30,7 +30,7 @@ jobs:
 
       - name: Compile kernel + modules + dtbs
         run: |
-          make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc) Image modules dtbs
+          make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc) Image dtbs
 
       - name: Install modules
         run: |
